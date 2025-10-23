@@ -1,0 +1,196 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.2.6/schema.json",
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"groups": [
+							{ "source": ":PACKAGE:", "type": false },
+							":PACKAGE:",
+							":BLANK_LINE:",
+							":NODE",
+							{ "source": ":NODE:", "type": false },
+							":BLANK_LINE:",
+							{ "source": [":ALIAS:"], "type": false },
+							":ALIAS:",
+							":BLANK_LINE:",
+							"**"
+						]
+					}
+				},
+				"useSortedKeys": "on"
+			}
+		},
+		"enabled": true
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"includes": ["**", "!**/dist", "!**/node_modules"]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 4,
+		"lineEnding": "lf",
+		"lineWidth": 120
+	},
+	"javascript": {
+		"formatter": {
+			"arrowParentheses": "always",
+			"bracketSameLine": false,
+			"bracketSpacing": true,
+			"quoteProperties": "asNeeded",
+			"quoteStyle": "double",
+			"semicolons": "always",
+			"trailingCommas": "all"
+		},
+		"parser": {
+			"unsafeParameterDecoratorsEnabled": true
+		}
+	},
+	"json": {
+		"formatter": {
+			"enabled": true,
+			"trailingCommas": "none"
+		}
+	},
+	"linter": {
+		"domains": {
+			"project": "recommended",
+			"test": "all"
+		},
+		"enabled": true,
+		"rules": {
+			"complexity": {
+				"noExcessiveLinesPerFunction": "error",
+				"noStaticOnlyClass": "off",
+				"noUselessCatch": "error"
+			},
+			"nursery": {
+				"noImportCycles": "error",
+				"useExplicitType": "error",
+				"useMaxParams": {
+					"level": "error",
+					"options": {
+						"max": 8
+					}
+				}
+			},
+			"performance": {
+				"noAccumulatingSpread": "error",
+				"noAwaitInLoops": "error",
+				"noDelete": "error",
+				"noDynamicNamespaceImportAccess": "error"
+			},
+			"style": {
+				"noDefaultExport": "error",
+				"noEnum": "error",
+				"noMagicNumbers": "error",
+				"noNestedTernary": "error",
+				"noNonNullAssertion": "error",
+				"noProcessEnv": "error",
+				"noUselessElse": "error",
+				"noYodaExpression": "error",
+				"useBlockStatements": "error",
+				"useCollapsedElseIf": "error",
+				"useCollapsedIf": "error",
+				"useConsistentMemberAccessibility": {
+					"level": "error",
+					"options": {
+						"accessibility": "explicit"
+					}
+				},
+				"useImportType": {
+					"level": "error",
+					"options": {
+						"style": "separatedType"
+					}
+				},
+				"useNamingConvention": {
+					"level": "error",
+					"options": {
+						"conventions": [
+							{
+								"formats": ["PascalCase"],
+								"selector": {
+									"kind": "class"
+								}
+							},
+							{
+								"match": "_(.+)",
+								"selector": {
+									"kind": "classMember",
+									"modifiers": ["private"]
+								}
+							},
+							{
+								"match": "_(.+)",
+								"selector": {
+									"kind": "classMember",
+									"modifiers": ["protected"]
+								}
+							},
+							{
+								"formats": ["CONSTANT_CASE", "camelCase"],
+								"selector": {
+									"kind": "classMember"
+								}
+							},
+							{
+								"formats": ["CONSTANT_CASE", "camelCase"],
+								"selector": {
+									"kind": "function"
+								}
+							},
+							{
+								"match": "I(.+)",
+								"selector": {
+									"kind": "interface"
+								}
+							},
+							{
+								"formats": ["CONSTANT_CASE", "camelCase"],
+								"selector": {
+									"kind": "const"
+								}
+							}
+						]
+					}
+				},
+				"useThrowOnlyError": "error"
+			},
+			"suspicious": {
+				"noApproximativeNumericConstant": "error",
+				"noAssignInExpressions": "error",
+				"noConsole": "error",
+				"noConstEnum": "error",
+				"noDoubleEquals": "error",
+				"noEvolvingTypes": "error",
+				"noExplicitAny": "error",
+				"noExportsInTest": "error",
+				"noFocusedTests": "error",
+				"noGlobalAssign": "error",
+				"noImplicitAnyLet": "error",
+				"noLabelVar": "error",
+				"noSkippedTests": "error",
+				"noTsIgnore": "error",
+				"noUnassignedVariables": "error",
+				"noUnsafeNegation": "error",
+				"noVar": "error",
+				"useAwait": "error",
+				"useErrorMessage": "error",
+				"useGetterReturn": "error",
+				"useNumberToFixedDigitsArgument": "error",
+				"useStrictMode": "error"
+			}
+		}
+	},
+	"vcs": {
+		"clientKind": "git",
+		"defaultBranch": "develop",
+		"enabled": true,
+		"useIgnoreFile": true
+	}
+}

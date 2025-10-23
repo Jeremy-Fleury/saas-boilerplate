@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+npm run check
+npx --no-install commitlint --edit "$1"

@@ -1,0 +1,18 @@
+{
+	"devDependencies": {
+		"@biomejs/biome": "2.2.6",
+		"@commitlint/cli": "20.1.0",
+		"@commitlint/config-conventional": "20.0.0",
+		"husky": "9.1.7"
+	},
+	"engines": {
+		"node": ">=24",
+		"pnpm": ">=10"
+	},
+	"name": "@konect/boilerplate",
+	"scripts": {
+		"check": "biome check",
+		"check:fix": "biome check --write",
+		"prepare": "husky"
+	}
+}
