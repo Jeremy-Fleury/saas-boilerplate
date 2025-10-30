@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Inject } from "@nestjs/common";
 
-import { ExampleRepository } from "@/example/repositories/example.repository";
-import type { IExampleEntity } from "@/example/entities/example.entity";
+import { ExampleRepository } from "@/example/infrastructure/repositories/example.repository";
+import type { IExampleAggregate } from "@/example/domain/aggregates/example.aggregate";
 
 export class GetExampleUseCase {
 	public constructor(
@@ -9,7 +9,7 @@ export class GetExampleUseCase {
 		private readonly _exampleRepository: ExampleRepository,
 	) {}
 
-	public execute(id: string): IExampleEntity | null {
+	public execute(id: string): IExampleAggregate | null {
 		const example = this._exampleRepository.getById(id);
 
 		if (!example) {

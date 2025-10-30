@@ -1,6 +1,7 @@
-import { ExampleRepository } from "@/example/repositories/example.repository";
-import { CreateExampleUseCase } from "@/example/use-cases/create-example.use-case";
-import type { ExampleInputDto } from "@/example/dtos/inputs/example.input-dto";
+import { ExampleRepository } from "@/example/infrastructure/repositories/example.repository";
+import type { ExampleInputDto } from "@/example/presentation/dto/inputs/example.input-dto";
+
+import { CreateExampleUseCase } from "./create-example.use-case";
 
 describe("CreateExampleUseCase", () => {
 	let exampleRepository: ExampleRepository;

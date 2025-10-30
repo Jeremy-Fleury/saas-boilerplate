@@ -1,21 +1,23 @@
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
+import { vi } from "vitest";
 import type { TestingModule } from "@nestjs/testing";
 
-import { ExampleController } from "@/example/controllers/example.controller";
-import { CreateExampleUseCase } from "@/example/use-cases/create-example.use-case";
-import { GetExampleUseCase } from "@/example/use-cases/get-example.use-case";
-import type { ExampleInputDto } from "@/example/dtos/inputs/example.input-dto";
-import type { IExampleEntity } from "@/example/entities/example.entity";
+import { CreateExampleUseCase } from "@/example/application/use-cases/create-example.use-case";
+import { GetExampleUseCase } from "@/example/application/use-cases/get-example.use-case";
+import type { IExampleAggregate } from "@/example/domain/aggregates/example.aggregate";
+import type { ExampleInputDto } from "@/example/presentation/dto/inputs/example.input-dto";
+
+import { ExampleController } from "./example.controller";
 
 describe("ExampleController", () => {
 	let controller: ExampleController;
-	let createUseCase: { execute: jest.Mock };
-	let getUseCase: { execute: jest.Mock };
+	let createUseCase: { execute: ReturnType<typeof vi.fn> };
+	let getUseCase: { execute: ReturnType<typeof vi.fn> };
 
 	beforeEach(async () => {
-		createUseCase = { execute: jest.fn() };
-		getUseCase = { execute: jest.fn() };
+		createUseCase = { execute: vi.fn() };
+		getUseCase = { execute: vi.fn() };
 
 		const module: TestingModule = await Test.createTestingModule({
 			controllers: [ExampleController],
@@ -30,7 +32,7 @@ describe("ExampleController", () => {
 
 	describe("get", () => {
 		it("should return example for provided id", () => {
-			const example: IExampleEntity = { description: "Desc", id: "123", name: "Example" };
+			const example: IExampleAggregate = { description: "Desc", id: "123", name: "Example" };
 			getUseCase.execute.mockReturnValue(example);
 
 			const result = controller.get("123");
@@ -51,7 +53,7 @@ describe("ExampleController", () => {
 	describe("create", () => {
 		it("should create and return example", () => {
 			const input: ExampleInputDto = { description: "Desc", name: "Example" } as ExampleInputDto;
-			const created: IExampleEntity = { description: "Desc", id: "id-1", name: "Example" };
+			const created: IExampleAggregate = { description: "Desc", id: "id-1", name: "Example" };
 			createUseCase.execute.mockReturnValue(created);
 
 			const result = controller.create(input);

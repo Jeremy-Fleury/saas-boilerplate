@@ -23,6 +23,7 @@
 		"sourceMap": true,
 		"strictBindCallApply": true,
 		"strictNullChecks": true,
-		"target": "ES2023"
+		"target": "es2024",
+		"types": ["vitest/globals"]
 	}
 }

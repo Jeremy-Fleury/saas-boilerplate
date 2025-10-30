@@ -1,7 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 import { ApiOkResponse, ApiOperation } from "@nestjs/swagger";
 
-import { HealthOutputDto } from "@/app/dtos/outputs/health.output-dto";
+import { HealthOutputDto } from "@/app/dto/outputs/health.output-dto";
 
 @Controller()
 export class AppController {

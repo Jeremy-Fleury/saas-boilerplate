@@ -1,15 +1,16 @@
 import { HttpException, HttpStatus } from "@nestjs/common";
 
-import type { IExampleEntity } from "@/example/entities/example.entity";
+import type { IExampleAggregate } from "@/example/domain/aggregates/example.aggregate";
+import type { IExampleRepository } from "@/example/domain/repositories/example.repository";
 
-export class ExampleRepository {
-	private readonly _examples: Map<string, IExampleEntity> = new Map();
+export class ExampleRepository implements IExampleRepository {
+	private readonly _examples: Map<string, IExampleAggregate> = new Map();
 
-	public getById(id: string): IExampleEntity | null {
+	public getById(id: string): IExampleAggregate | null {
 		return this._examples.get(id) ?? null;
 	}
 
-	public create(input: IExampleEntity): IExampleEntity {
+	public create(input: IExampleAggregate): IExampleAggregate {
 		if (this._examples.has(input.id)) {
 			throw new HttpException("Example already exists", HttpStatus.CONFLICT);
 		}

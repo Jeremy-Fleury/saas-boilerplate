@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Inject, Param, Post } from "@nestjs/common";
 import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiParam } from "@nestjs/swagger";
 
-import { ExampleInputDto } from "@/example/dtos/inputs/example.input-dto";
-import { ExampleOutputDto } from "@/example/dtos/outputs/example.output-dto";
-import { CreateExampleUseCase } from "@/example/use-cases/create-example.use-case";
-import { GetExampleUseCase } from "@/example/use-cases/get-example.use-case";
+import { CreateExampleUseCase } from "@/example/application/use-cases/create-example.use-case";
+import { GetExampleUseCase } from "@/example/application/use-cases/get-example.use-case";
+import { ExampleInputDto } from "@/example/presentation/dto/inputs/example.input-dto";
+import { ExampleOutputDto } from "@/example/presentation/dto/outputs/example.output-dto";
 
 @Controller("example")
 export class ExampleController {

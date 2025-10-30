@@ -1,0 +1,11 @@
+version: "0.2"
+language: en
+dictionaries:
+  - typescript
+  - softwareTerms
+ignorePaths:
+  - "node_modules"
+  - "dist"
+  - "coverage"
+  - "pnpm-lock.yaml"
+  - "*.generated.*"
