@@ -1,6 +1,6 @@
-import type { IExampleAggregate } from "../aggregates/example.aggregate";
+import type { ExampleEntity } from "../entities/example.entity";
 
 export interface IExampleRepository {
-	getById(id: string): IExampleAggregate | null;
-	create(input: IExampleAggregate): IExampleAggregate;
+	getById(id: string): ExampleEntity | null;
+	create(input: ExampleEntity): void;
 }

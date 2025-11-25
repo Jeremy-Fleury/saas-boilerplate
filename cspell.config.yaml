@@ -8,4 +8,5 @@ ignorePaths:
   - "dist"
   - "coverage"
   - "pnpm-lock.yaml"
+  - "src/generated"
   - "*.generated.*"

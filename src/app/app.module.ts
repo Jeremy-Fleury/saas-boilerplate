@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 
 import { AppController } from "@/app/controllers/app.controller";
 import { envValidate } from "@/app/env/env.validation";
-import { ExampleModule } from "@/example/example.module";
+import { ExampleModule } from "@/example/presentation/modules/example.module";
 
 @Module({
 	controllers: [AppController],
@@ -12,7 +12,6 @@ import { ExampleModule } from "@/example/example.module";
 			isGlobal: true,
 			validate: envValidate,
 		}),
-
 		ExampleModule,
 	],
 	providers: [],

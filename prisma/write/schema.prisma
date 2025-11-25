@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../../src/generated/prisma/write"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Example {
+  id          String   @id @default(uuid())
+  name        String   @db.VarChar(100)
+  description String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
