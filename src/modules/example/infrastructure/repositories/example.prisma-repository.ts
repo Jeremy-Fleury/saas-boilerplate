@@ -1,18 +1,34 @@
-import type { PrismaService } from "@/modules/database/infrastructure/services/prisma.service";
+import type { Example, Prisma } from "@/database/infrastructure/prisma-client/client";
+import type { PrismaService } from "@/database/infrastructure/services/prisma.service";
 
 import { ExampleEntity } from "../../domain/entities/example.entity";
 import type { IExampleRepository } from "../../domain/repositories/example.repository";
 
 export class ExamplePrismaRepository implements IExampleRepository {
-	public constructor(private readonly _prismaService: PrismaService) {}
+	public constructor(private readonly _prisma: Prisma.TransactionClient | PrismaService) {}
 
 	public async getById(id: string): Promise<ExampleEntity | null> {
-		const example = await this._prismaService.example.findUnique({
-			where: { id },
+		const example: Example | null = await this._prisma.example.findUnique({
+			where: {
+				id,
+			},
 		});
 
-		return example ? ExampleEntity.fromPrimitives(example) : null;
+		if (!example) {
+			return null;
+		}
+
+		return ExampleEntity.fromPrimitives(example);
 	}
 
-	public async create(input: ExampleEntity): Promise<void> {}
+	public async create(input: ExampleEntity): Promise<void> {
+		await this._prisma.example.create({
+			data: {
+				description: input.description.value,
+				id: input.id,
+				name: input.name.value,
+				status: input.status,
+			},
+		});
+	}
 }

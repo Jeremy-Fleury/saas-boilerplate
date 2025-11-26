@@ -1,19 +1,14 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/common/database/infrastructure/prisma-client"
-  engineType             = "client"
-  runtime                = "nodejs"
-  moduleFormat           = "esm"
-  generatedFileExtension = "ts"
-  importFileExtension    = "ts"
+  provider     = "prisma-client"
+  output       = "../../src/database/infrastructure/prisma-client"
+  moduleFormat = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
-  schemas  = ["example"]
 }
 
 generator erd {
   provider = "prisma-erd-generator"
-  output = "../../DATABASE_README.md"
+  output   = "../../README_DATABASE.md"
 }

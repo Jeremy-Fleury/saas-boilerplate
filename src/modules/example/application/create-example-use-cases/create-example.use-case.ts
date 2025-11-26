@@ -1,7 +1,7 @@
-import type { IDateService } from "@/common/domain/services/date.service";
 import type { IIdService } from "@/common/domain/services/id.service";
 
 import { ExampleEntity } from "../../domain/entities/example.entity";
+import type { IExampleRepository } from "../../domain/repositories/example.repository";
 
 export interface ICreateExampleUseCaseProps {
 	name: string;
@@ -10,20 +10,20 @@ export interface ICreateExampleUseCaseProps {
 
 export class CreateExampleUseCase {
 	public constructor(
-		private readonly _dateService: IDateService,
 		private readonly _idService: IIdService,
+		private readonly _exampleRepository: IExampleRepository,
 	) {}
 
-	public execute(props: ICreateExampleUseCaseProps): ExampleEntity {
+	public async execute(props: ICreateExampleUseCaseProps): Promise<ExampleEntity> {
 		const id = this._idService.generateUuidV7();
-		const now = this._dateService.nowUtcIso();
 
 		const example = ExampleEntity.create({
 			description: props.description,
 			id,
 			name: props.name,
-			now,
 		});
+
+		await this._exampleRepository.create(example);
 
 		return example;
 	}

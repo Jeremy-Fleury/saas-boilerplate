@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 
-import type { IDateService } from "../../../domain/services/date.service";
+import type { IDateService } from "@/common/domain/services/date.service";
 
 export class DateLuxonService implements IDateService {
 	public nowUtcIso(): string {

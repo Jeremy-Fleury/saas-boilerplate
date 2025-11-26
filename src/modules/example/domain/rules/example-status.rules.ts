@@ -1,5 +1,6 @@
-import { InvalidTransitionError, ValidationError } from "@/shared/errors/domain/errors/domain.error";
-import type { TExampleStatus } from "@/example/domain/types/example-status.type";
+import { InvalidTransitionError, ValidationError } from "@/common/domain/errors/domain.error";
+
+import type { TExampleStatus } from "../types/example-status.type";
 
 export function assertExampleStatus(x: unknown): asserts x is TExampleStatus {
 	if (x !== "draft" && x !== "active" && x !== "archived") {
@@ -7,7 +8,7 @@ export function assertExampleStatus(x: unknown): asserts x is TExampleStatus {
 	}
 }
 
-export function canTransitionExampleStatus(from: TExampleStatus, to: TExampleStatus): boolean {
+function canTransitionExampleStatus(from: TExampleStatus, to: TExampleStatus): boolean {
 	if (from === to) {
 		return true;
 	}

@@ -5,5 +5,5 @@ export abstract class DomainError extends Error {
 	}
 }
 
-export class ValidationError extends DomainError {}
 export class InvalidTransitionError extends DomainError {}
+export class ValidationError extends DomainError {}

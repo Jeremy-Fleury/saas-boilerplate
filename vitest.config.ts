@@ -14,7 +14,18 @@ export default defineConfig({
 	test: {
 		clearMocks: true,
 		coverage: {
+			enabled: true,
+			exclude: ["src/**/*.spec.ts", "src/**/*.test.ts", "**/*.d.ts", "dist/**", "src/common/domain/errors/**"],
+			include: ["src/**/domain/**/*.ts", "src/**/application/**/*.ts"],
 			provider: "v8",
+			reporter: ["text"],
+			reportsDirectory: "./coverage",
+			thresholds: {
+				branches: 100,
+				functions: 100,
+				lines: 100,
+				statements: 100,
+			},
 		},
 		environment: "node",
 		globals: true,

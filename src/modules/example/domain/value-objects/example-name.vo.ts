@@ -1,9 +1,13 @@
-import { ValidationError } from "@/shared/errors/domain/errors/domain.error";
-import { RootValueObject } from "@/shared/root/domain/value-objects/root.vo";
+import { ValidationError } from "@/common/domain/errors/domain.error";
+import { RootValueObject } from "@/common/domain/value-objects/root.vo";
 
 export class ExampleNameVo extends RootValueObject<string> {
 	private static readonly _EXAMPLE_NAME_MIN_LENGTH = 1;
 	private static readonly _EXAMPLE_NAME_MAX_LENGTH = 100;
+
+	private constructor(value: string) {
+		super(value);
+	}
 
 	public static create(raw: string): ExampleNameVo {
 		const value = raw.trim();

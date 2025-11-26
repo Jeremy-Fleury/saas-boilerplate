@@ -27,7 +27,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!**/dist", "!**/node_modules", "!prisma", "!src/modules/database/infrastructure/prisma-client"]
+		"includes": ["**", "!**/dist", "!**/node_modules", "!prisma", "!src/modules/database/infrastructure/prisma-client", "!openapi.json"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -44,7 +44,7 @@
 			"quoteProperties": "asNeeded",
 			"quoteStyle": "double",
 			"semicolons": "always",
-			"trailingCommas": "all"
+			"trailingCommas": "always"
 		},
 		"parser": {
 			"unsafeParameterDecoratorsEnabled": true
@@ -96,7 +96,14 @@
 					"options": {
 						"paths": {
 							"lodash": "Using lodash is forbidden"
-						}
+						},
+						"patterns": [
+							{
+								"group": ["../../../**"],
+								"message": "Triple ../ imports are forbidden. Use aliases for imports."
+							}
+						]
+					}
 				},
 				"useConsistentMemberAccessibility": {
 					"level": "error",
@@ -228,11 +235,5 @@
 				"useStrictMode": "error"
 			}
 		}
-	},
-	"vcs": {
-		"clientKind": "git",
-		"defaultBranch": "develop",
-		"enabled": true,
-		"useIgnoreFile": true
 	}
 }
