@@ -27,7 +27,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!**/dist", "!**/node_modules"]
+		"includes": ["**", "!**/dist", "!**/node_modules", "!prisma", "!src/modules/database/infrastructure/prisma-client"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -91,11 +91,13 @@
 				"noNestedTernary": "error",
 				"noNonNullAssertion": "error",
 				"noProcessEnv": "error",
-				"noUselessElse": "error",
-				"noYodaExpression": "error",
-				"useBlockStatements": "error",
-				"useCollapsedElseIf": "error",
-				"useCollapsedIf": "error",
+				"noRestrictedImports": {
+					"level": "error",
+					"options": {
+						"paths": {
+							"lodash": "Using lodash is forbidden"
+						}
+				},
 				"useConsistentMemberAccessibility": {
 					"level": "error",
 					"options": {
