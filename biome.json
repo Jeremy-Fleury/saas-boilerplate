@@ -27,7 +27,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!**/dist", "!**/node_modules", "!prisma", "!src/modules/database/infrastructure/prisma-client", "!openapi.json"]
+		"includes": ["**", "!**/dist", "!**/node_modules", "!prisma", "!src/common/database/infrastructure/prisma-client", "!openapi.json"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -44,7 +44,7 @@
 			"quoteProperties": "asNeeded",
 			"quoteStyle": "double",
 			"semicolons": "always",
-			"trailingCommas": "always"
+			"trailingCommas": "all"
 		},
 		"parser": {
 			"unsafeParameterDecoratorsEnabled": true
@@ -58,7 +58,7 @@
 	},
 	"linter": {
 		"domains": {
-			"project": "recommended",
+			"project": "all",
 			"test": "all"
 		},
 		"enabled": true,
@@ -67,6 +67,9 @@
 				"noExcessiveLinesPerFunction": "error",
 				"noStaticOnlyClass": "off",
 				"noUselessCatch": "error"
+			},
+			"correctness": {
+				"useImportExtensions": "off"
 			},
 			"nursery": {
 				"noImportCycles": "error",

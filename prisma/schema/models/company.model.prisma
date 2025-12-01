@@ -1,0 +1,16 @@
+model Company {
+    // Business
+    id   String @id @default(uuid())
+    name String
+
+    // Relationships
+    examples Example[]
+
+    // Metadata
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    tenantId  String   @unique
+
+    // Indexes
+    @@index([tenantId])
+}

@@ -1,6 +1,6 @@
-import type { IIdService } from "@/common/domain/services/id.service";
+import type { IIdService } from "@/common/uuid/domain/services/id.service";
 
-import { ExampleEntity } from "../../domain/entities/example.entity";
+import { Example } from "../../domain/entities/example.entity";
 import type { IExampleRepository } from "../../domain/repositories/example.repository";
 
 export interface ICreateExampleUseCaseProps {
@@ -14,10 +14,10 @@ export class CreateExampleUseCase {
 		private readonly _exampleRepository: IExampleRepository,
 	) {}
 
-	public async execute(props: ICreateExampleUseCaseProps): Promise<ExampleEntity> {
+	public async execute(props: ICreateExampleUseCaseProps): Promise<Example> {
 		const id = this._idService.generateUuidV7();
 
-		const example = ExampleEntity.create({
+		const example = Example.create({
 			description: props.description,
 			id,
 			name: props.name,

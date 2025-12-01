@@ -1,9 +1,19 @@
 model Example {
+  // Business
   id          String        @id @default(uuid())
   name        String
   description String
   status      ExampleStatus @default(draft)
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-}
 
+  // Relationships
+  company   Company @relation(fields: [companyId], references: [id])
+  companyId String
+
+  // Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tenantId  String
+
+  // Indexes
+  @@index([id, tenantId, companyId])
+}

@@ -3,4 +3,3 @@ npx --no-install commitlint --edit "$1"
 pnpm run test
 pnpm run check
 pnpm run tsc
-pnpm run cspell

@@ -14,8 +14,6 @@ sequenceDiagram
   Client->>Controller: POST /examples {name, description}
   Controller->>UseCase: execute(command)
 
-  UseCase->>Clock: now()
-  Clock-->>UseCase: Date now
   UseCase->>Uuid: v7()
   Uuid-->>UseCase: string id
 

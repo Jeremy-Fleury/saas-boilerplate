@@ -1,4 +1,4 @@
-import type { IIdService } from "@/common/domain/services/id.service";
+import type { IIdService } from "@/common/uuid/domain/services/id.service";
 
 import type { IExampleRepository } from "../../domain/repositories/example.repository";
 import { CreateExampleUseCase } from "./create-example.use-case";
@@ -10,7 +10,7 @@ describe("CreateExampleUseCase", () => {
 
 	beforeEach(() => {
 		idService = {
-			generateUuidV7: vi.fn().mockReturnValueOnce("id-1").mockReturnValueOnce("id-2"),
+			generateUuidV7: vi.fn().mockReturnValueOnce("019ae9a2-fb25-7300-afc4-9c966cb1df53").mockReturnValueOnce("019ae9a2-fb25-7a07-992c-1dc785d90476"),
 		};
 
 		exampleRepository = {

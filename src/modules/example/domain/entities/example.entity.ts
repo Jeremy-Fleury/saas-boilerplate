@@ -1,109 +1,89 @@
-import { RootEntity } from "@/common/domain/entities/root.entity";
-import type { IRootEntityPrimitives, IRootEntityProps } from "@/common/domain/entities/root.entity";
+import { Root } from "@/common/root/domain/entities/root.entity";
+import { UuidV7 } from "@/common/uuid/domain/value-objects/uuid.vo";
+import type { IRootConstructorProps, IRootPrimitives } from "@/common/root/domain/entities/root.entity";
 
-import { assertCanTransitionExampleStatus, assertExampleStatus } from "../rules/example-status.rules";
-import type { TExampleStatus } from "../types/example-status.type";
-import { ExampleDescriptionVo } from "../value-objects/example-description.vo";
-import { ExampleNameVo } from "../value-objects/example-name.vo";
+import { ExampleStatus } from "../value-objects/example-status.vo";
 
-export interface IExampleEntityPrimitives extends IRootEntityPrimitives {
+interface IExampleConstructorProps extends IRootConstructorProps {
 	name: string;
 	description: string;
-	status: TExampleStatus;
+	status: ExampleStatus;
 }
 
-interface IExampleEntityProps extends IRootEntityProps {
-	name: ExampleNameVo;
-	description: ExampleDescriptionVo;
-	status: TExampleStatus;
+interface IExampleCreateProps {
+	id: string;
+	name: string;
+	description: string;
 }
 
-export class ExampleEntity extends RootEntity {
-	private _name: ExampleNameVo;
-	private _description: ExampleDescriptionVo;
-	private _status: TExampleStatus;
+export interface IExamplePrimitives extends IRootPrimitives {
+	name: string;
+	description: string;
+	status: string;
+}
 
-	private constructor(props: IExampleEntityProps) {
+export class Example extends Root {
+	private _name: string;
+	private _description: string;
+	private _status: ExampleStatus;
+
+	private constructor(props: IExampleConstructorProps) {
 		super(props);
 		this._name = props.name;
 		this._description = props.description;
 		this._status = props.status;
 	}
 
-	public get name(): ExampleNameVo {
+	// Getters
+
+	public get name(): string {
 		return this._name;
 	}
 
-	public get description(): ExampleDescriptionVo {
+	public get description(): string {
 		return this._description;
 	}
 
-	public get status(): TExampleStatus {
+	public get status(): ExampleStatus {
 		return this._status;
 	}
 
-	public static create(props: { id: string; name: string; description: string }): ExampleEntity {
-		return new ExampleEntity({
-			description: ExampleDescriptionVo.create(props.description),
-			id: props.id,
-			name: ExampleNameVo.create(props.name),
-			status: "draft",
+	// Business logic
+
+	public static create(props: IExampleCreateProps): Example {
+		return new Example({
+			description: props.description,
+			id: UuidV7.fromPrimitive(props.id),
+			name: props.name,
+			status: ExampleStatus.draft(),
 		});
 	}
 
-	public static fromPrimitives(p: IExampleEntityPrimitives): ExampleEntity {
-		assertExampleStatus(p.status);
+	public updateDescription(description: string): void {
+		this._description = description;
+	}
 
-		return new ExampleEntity({
-			description: ExampleDescriptionVo.create(p.description),
-			id: p.id,
-			name: ExampleNameVo.create(p.name),
-			status: p.status,
+	public updateName(name: string): void {
+		this._name = name;
+	}
+
+	// Mapping
+
+	public static fromPrimitives(props: IExamplePrimitives): Example {
+		return new Example({
+			description: props.description,
+			id: UuidV7.fromPrimitive(props.id),
+			name: props.name,
+			status: ExampleStatus.fromPrimitive(props.status),
 		});
 	}
 
-	public toPrimitives(): IExampleEntityPrimitives {
+	public toPrimitives(): IExamplePrimitives {
 		return {
-			description: this.description.value,
-			id: this.id,
-			name: this.name.value,
-			status: this.status,
+			description: this.description,
+			id: this.id.value,
+			name: this.name,
+			status: this.status.value,
 		};
-	}
-
-	public rename(rawName: string): void {
-		const next = ExampleNameVo.create(rawName);
-
-		if (next.value === this._name.value) {
-			return;
-		}
-
-		this._name = next;
-	}
-
-	public changeDescription(rawDescription: string): void {
-		const next = ExampleDescriptionVo.create(rawDescription);
-		if (next.value === this._description.value) {
-			return;
-		}
-		this._description = next;
-	}
-
-	public activate(): void {
-		this._transitionTo("active");
-	}
-
-	public archive(): void {
-		this._transitionTo("archived");
-	}
-
-	private _transitionTo(next: TExampleStatus): void {
-		assertCanTransitionExampleStatus(this._status, next);
-
-		if (this._status === next) {
-			return;
-		}
-
-		this._status = next;
 	}
 }

@@ -6,8 +6,9 @@ import type { GetExampleUseCase } from "../../application/get-example-use-cases/
 import { EXAMPLE_CREATE_EXAMPLE_USE_CASE_TOKEN, EXAMPLE_GET_EXAMPLE_USE_CASE_TOKEN } from "../../infrastructure/dependency-injection/example.token";
 import { ExampleInputDto } from "../dto/inputs/example.input-dto";
 import { ExampleOutputDto } from "../dto/outputs/example.output-dto";
+import { ExampleOutputDtoMappers } from "../mappers/example-output-dto.mappers";
 
-@Controller("examples")
+@Controller("example")
 export class ExampleController {
 	public constructor(
 		@Inject(EXAMPLE_CREATE_EXAMPLE_USE_CASE_TOKEN)
@@ -18,15 +19,25 @@ export class ExampleController {
 
 	@Get(":id")
 	@HttpCode(HttpStatus.OK)
-	@ApiOperation({ description: "Get an example by id", summary: "Get Example" })
+	@ApiOperation({
+		description: `
+Retrieves an **Example** by its identifier.
+
+### Purpose
+- Allow a client (UI, service, script) to fetch the current state of an **Example** resource.
+- Typical read endpoint: idempotent and safe.
+`.trim(),
+		summary: "Get Example",
+	})
 	@ApiOkResponse({
+		description: "Example found and returned.",
 		type: ExampleOutputDto,
 	})
 	@ApiNotFoundResponse({
-		description: "Example not found",
+		description: "Example not found for the provided identifier.",
 	})
 	@ApiParam({
-		description: "The id of the example",
+		description: "Unique identifier of the Example.",
 		example: "019ad951-368a-7de5-b7ba-add19cfd187b",
 		name: "id",
 		required: true,
@@ -39,28 +50,34 @@ export class ExampleController {
 			throw new NotFoundException("Example not found");
 		}
 
-		return ExampleOutputDto.fromEntity(example);
+		return ExampleOutputDtoMappers.fromEntity(example);
 	}
 
 	@Post()
 	@HttpCode(HttpStatus.CREATED)
 	@ApiOperation({
-		description: "Create a new example",
+		description: `
+Creates a new **Example** from the provided payload.
+
+### Purpose
+- Create an **Example** resource and return its canonical representation.
+- Typical create endpoint: non-idempotent.
+`.trim(),
 		summary: "Create Example",
 	})
 	@ApiCreatedResponse({
-		description: "Example successfully created",
+		description: "Example successfully created.",
 		type: ExampleOutputDto,
 	})
 	@ApiBadRequestResponse({
-		description: "Validation failed for the payload",
+		description: "Invalid payload (DTO validation / constraints).",
 	})
 	@ApiBody({
-		description: "The example to create",
+		description: "Example creation payload.",
 		type: ExampleInputDto,
 	})
 	public async createExample(@Body() body: ExampleInputDto): Promise<ExampleOutputDto> {
 		const example = await this._createExampleUseCase.execute(body);
-		return ExampleOutputDto.fromEntity(example);
+		return ExampleOutputDtoMappers.fromEntity(example);
 	}
 }

@@ -1,8 +1,4 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsIn, IsString } from "class-validator";
-
-import type { ExampleEntity } from "@/modules/example/domain/entities/example.entity";
-import type { TExampleStatus } from "@/modules/example/domain/types/example-status.type";
 
 export class ExampleOutputDto {
 	@ApiProperty({
@@ -11,7 +7,6 @@ export class ExampleOutputDto {
 		required: true,
 		type: String,
 	})
-	@IsString()
 	public id: string;
 
 	@ApiProperty({
@@ -20,7 +15,6 @@ export class ExampleOutputDto {
 		required: true,
 		type: String,
 	})
-	@IsString()
 	public name: string;
 
 	@ApiProperty({
@@ -29,15 +23,5 @@ export class ExampleOutputDto {
 		required: true,
 		type: String,
 	})
-	@IsString()
-	@IsIn(["draft", "active", "archived"])
-	public status: TExampleStatus;
-
-	public static fromEntity(entity: ExampleEntity): ExampleOutputDto {
-		return {
-			id: entity.id,
-			name: entity.name.value,
-			status: entity.status,
-		};
-	}
+	public status: string;
 }
