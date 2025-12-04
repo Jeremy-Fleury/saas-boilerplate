@@ -7,6 +7,14 @@ active active
 archived archived
         }
     
+  "Company" {
+    String id "🗝️"
+    String name 
+    DateTime createdAt 
+    DateTime updatedAt 
+    }
+  
+
   "Example" {
     String id "🗝️"
     String name 
@@ -16,5 +24,7 @@ archived archived
     DateTime updatedAt 
     }
   
+    "Company" o{--}o "Example" : ""
     "Example" o|--|| "ExampleStatus" : "enum:status"
+    "Example" o|--|| "Company" : "company"
 ```

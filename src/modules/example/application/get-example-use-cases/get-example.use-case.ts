@@ -1,5 +1,6 @@
+import type { UnitOfWorkService } from "@/common/database/domain/services/unit-of-work.service";
+
 import type { Example } from "../../domain/entities/example.entity";
-import type { IExampleRepository } from "../../domain/repositories/example.repository";
 
 export interface ICreateExampleUseCaseProps {
 	name: string;
@@ -7,11 +8,11 @@ export interface ICreateExampleUseCaseProps {
 }
 
 export class GetExampleUseCase {
-	public constructor(private readonly _exampleRepository: IExampleRepository) {}
+	public constructor(private readonly _unitOfWork: UnitOfWorkService) {}
 
 	public async execute(id: string): Promise<Example | null> {
-		const example = await this._exampleRepository.getById(id);
-
-		return example;
+		return await this._unitOfWork.execute(async (context): Promise<Example | null> => {
+			return await context.example.getById(id);
+		});
 	}
 }

@@ -19,4 +19,22 @@ export class ExampleInputDto {
 	})
 	@IsString()
 	public description: string;
+
+	@ApiProperty({
+		description: "The company identifier",
+		example: "019ae9a2-fb25-78a0-8b39-de00ab262777",
+		required: true,
+		type: String,
+	})
+	@IsString()
+	public companyId: string;
+
+	@ApiProperty({
+		description: "The tenant identifier",
+		example: "019ae9a2-fb25-78a0-8b39-de00ab212747",
+		required: true,
+		type: String,
+	})
+	@IsString()
+	public tenantId: string;
 }

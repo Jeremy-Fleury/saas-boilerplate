@@ -1,4 +1,4 @@
-export abstract class DomainError extends Error {
+export abstract class ApplicationError extends Error {
 	public readonly payload: Record<string, unknown>;
 
 	public constructor(message: string, payload: Record<string, unknown> = {}) {
@@ -8,5 +8,4 @@ export abstract class DomainError extends Error {
 	}
 }
 
-export class InvalidTransitionDomainError extends DomainError {}
-export class ValidationDomainError extends DomainError {}
+export class RessourceAlreadyExistsApplicationError extends ApplicationError {}

@@ -7,7 +7,10 @@ import type { Prisma } from "../prisma-client/client";
 import { PrismaClient } from "../prisma-client/client";
 
 type TPrismaEventClient = {
-	$on: (eventType: "query" | "error" | "warn", callback: (event: Prisma.QueryEvent | Prisma.LogEvent) => void) => void;
+	$on: (
+		eventType: "query" | "error" | "warn",
+		callback: (event: Prisma.QueryEvent | Prisma.LogEvent) => void,
+	) => void;
 };
 
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {

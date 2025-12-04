@@ -1,7 +1,7 @@
 model Company {
     // Business
     id   String @id @default(uuid())
-    name String
+    name String @unique
 
     // Relationships
     examples Example[]
@@ -9,8 +9,7 @@ model Company {
     // Metadata
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    tenantId  String   @unique
 
     // Indexes
-    @@index([tenantId])
+    @@index([id])
 }

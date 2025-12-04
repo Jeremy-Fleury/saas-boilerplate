@@ -27,14 +27,21 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!**/dist", "!**/node_modules", "!prisma", "!src/common/database/infrastructure/prisma-client", "!openapi.json"]
+		"includes": [
+			"**",
+			"!**/dist",
+			"!**/node_modules",
+			"!prisma",
+			"!src/common/database/infrastructure/prisma-client",
+			"!openapi.json"
+		]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
 		"indentWidth": 4,
 		"lineEnding": "lf",
-		"lineWidth": 160
+		"lineWidth": 120
 	},
 	"javascript": {
 		"formatter": {

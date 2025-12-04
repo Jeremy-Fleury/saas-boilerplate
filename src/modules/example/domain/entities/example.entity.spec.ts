@@ -2,6 +2,7 @@ import type { IExamplePrimitives } from "./example.entity";
 import { Example } from "./example.entity";
 
 const basePrimitives: IExamplePrimitives = {
+	companyId: "019ae9a2-fb25-78a0-8b39-de00ab262777",
 	description: "A description of John Doe",
 	id: "019ae9a2-fb25-78a0-8b39-de00ab212777",
 	name: "John Doe",
@@ -11,6 +12,7 @@ const basePrimitives: IExamplePrimitives = {
 describe("ExampleEntity - creation", () => {
 	it("should create an example with draft status by default", () => {
 		const entity = Example.create({
+			companyId: basePrimitives.companyId,
 			description: basePrimitives.description,
 			id: basePrimitives.id,
 			name: basePrimitives.name,

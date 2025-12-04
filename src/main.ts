@@ -1,4 +1,4 @@
-import { ConsoleLogger, ValidationPipe } from "@nestjs/common";
+import { ConsoleLogger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { FastifyAdapter } from "@nestjs/platform-fastify";
@@ -8,25 +8,28 @@ import type { INestApplication } from "@nestjs/common";
 import type { NestFastifyApplication } from "@nestjs/platform-fastify";
 import type { OpenAPIObject } from "@nestjs/swagger";
 
-import { writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { readFileSync, writeFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 import { AppModule } from "@/app/infrastructure/modules/app.module";
 
+import { HttpExceptionFilter } from "./app/infrastructure/filters/http-exception.filter";
+import { createValidationPipe } from "./app/infrastructure/pipes/validation.pipe";
+
+require("dd-trace").init({ logInjection: true });
+
 function swaggerSetup(app: INestApplication): OpenAPIObject {
-	const config = new DocumentBuilder().setTitle("Blank OpenBanking API").setVersion("1.0").build();
+	const packageJson = JSON.parse(readFileSync(resolve(process.cwd(), "package.json"), "utf-8"));
+	const config = new DocumentBuilder()
+		.setTitle(packageJson.name)
+		.setDescription(packageJson.description)
+		.setVersion(packageJson.version)
+		.build();
 	const document: OpenAPIObject = SwaggerModule.createDocument(app, config);
 
 	SwaggerModule.setup("api", app, document, {
-		customSiteTitle: "Boilerplate OpenAPI",
+		customSiteTitle: packageJson.name,
 		raw: ["json"],
-		swaggerOptions: {
-			displayRequestDuration: true,
-			docExpansion: "list",
-			operationsSorter: "alpha",
-			persistAuthorization: true,
-			tagsSorter: "alpha",
-		},
 		ui: false,
 	});
 
@@ -48,20 +51,24 @@ async function bootstrap(): Promise<void> {
 	app.useLogger(
 		new ConsoleLogger({
 			json: NODE_ENV !== "local",
+			prefix: "NestJS Boilerplate",
+			timestamp: true,
 		}),
 	);
 
-	app.useGlobalPipes(new ValidationPipe());
+	app.useGlobalPipes(createValidationPipe());
+	app.useGlobalFilters(new HttpExceptionFilter());
 
 	const document = swaggerSetup(app);
 
 	app.use(
-		"/scalar",
+		"/docs",
 		apiReference({
 			content: document,
 			withFastify: true,
 		}),
 	);
+
 	await app.init();
 
 	await app.listen(PORT ?? DEFAULT_PORT);

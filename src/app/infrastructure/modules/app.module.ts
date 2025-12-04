@@ -6,6 +6,7 @@ import { RequestLoggerMiddleware } from "@/app/infrastructure/middlewares/reques
 import { envValidationService } from "@/app/infrastructure/services/env.service";
 import { AppController } from "@/app/presentation/controllers/app.controller";
 import { DatabaseModule } from "@/common/database/infrastructure/modules/database.module";
+import { CompanyModule } from "@/modules/company/infrastructure/modules/company.module";
 import { ExampleModule } from "@/modules/example/infrastructure/modules/example.module";
 
 @Module({
@@ -16,6 +17,7 @@ import { ExampleModule } from "@/modules/example/infrastructure/modules/example.
 			validate: envValidationService,
 		}),
 		ExampleModule,
+		CompanyModule,
 		DatabaseModule,
 	],
 })

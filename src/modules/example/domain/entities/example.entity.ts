@@ -5,26 +5,30 @@ import type { IRootConstructorProps, IRootPrimitives } from "@/common/root/domai
 import { ExampleStatus } from "../value-objects/example-status.vo";
 
 interface IExampleConstructorProps extends IRootConstructorProps {
-	name: string;
+	companyId: string;
 	description: string;
+	name: string;
 	status: ExampleStatus;
 }
 
 interface IExampleCreateProps {
+	companyId: string;
+	description: string;
 	id: string;
 	name: string;
-	description: string;
 }
 
 export interface IExamplePrimitives extends IRootPrimitives {
-	name: string;
+	companyId: string;
 	description: string;
+	name: string;
 	status: string;
 }
 
 export class Example extends Root {
-	private _name: string;
+	private _companyId: string;
 	private _description: string;
+	private _name: string;
 	private _status: ExampleStatus;
 
 	private constructor(props: IExampleConstructorProps) {
@@ -48,10 +52,15 @@ export class Example extends Root {
 		return this._status;
 	}
 
+	public get companyId(): string {
+		return this._companyId;
+	}
+
 	// Business logic
 
 	public static create(props: IExampleCreateProps): Example {
 		return new Example({
+			companyId: props.companyId,
 			description: props.description,
 			id: UuidV7.fromPrimitive(props.id),
 			name: props.name,
@@ -71,6 +80,7 @@ export class Example extends Root {
 
 	public static fromPrimitives(props: IExamplePrimitives): Example {
 		return new Example({
+			companyId: props.companyId,
 			description: props.description,
 			id: UuidV7.fromPrimitive(props.id),
 			name: props.name,
@@ -80,6 +90,7 @@ export class Example extends Root {
 
 	public toPrimitives(): IExamplePrimitives {
 		return {
+			companyId: this.companyId,
 			description: this.description,
 			id: this.id.value,
 			name: this.name,

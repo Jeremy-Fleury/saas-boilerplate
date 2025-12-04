@@ -1,9 +1,20 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Inject, NotFoundException, Param, Post } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam } from "@nestjs/swagger";
+import {
+	ApiBadRequestResponse,
+	ApiBody,
+	ApiCreatedResponse,
+	ApiNotFoundResponse,
+	ApiOkResponse,
+	ApiOperation,
+	ApiParam,
+} from "@nestjs/swagger";
 
 import type { CreateExampleUseCase } from "../../application/create-example-use-cases/create-example.use-case";
 import type { GetExampleUseCase } from "../../application/get-example-use-cases/get-example.use-case";
-import { EXAMPLE_CREATE_EXAMPLE_USE_CASE_TOKEN, EXAMPLE_GET_EXAMPLE_USE_CASE_TOKEN } from "../../infrastructure/dependency-injection/example.token";
+import {
+	EXAMPLE_CREATE_EXAMPLE_USE_CASE_TOKEN,
+	EXAMPLE_GET_EXAMPLE_USE_CASE_TOKEN,
+} from "../../infrastructure/dependency-injection/example.token";
 import { ExampleInputDto } from "../dto/inputs/example.input-dto";
 import { ExampleOutputDto } from "../dto/outputs/example.output-dto";
 import { ExampleOutputDtoMappers } from "../mappers/example-output-dto.mappers";

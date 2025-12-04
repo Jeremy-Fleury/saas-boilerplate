@@ -1,14 +1,13 @@
-import type { Example as ExamplePrisma, Prisma } from "@/common/database/infrastructure/prisma-client/client";
-import type { PrismaService } from "@/common/database/infrastructure/services/prisma.service";
+import type { Prisma } from "@/common/database/infrastructure/prisma-client/client";
 
 import { Example } from "../../domain/entities/example.entity";
 import type { IExampleRepository } from "../../domain/repositories/example.repository";
 
 export class ExamplePrismaRepository implements IExampleRepository {
-	public constructor(private readonly _prisma: Prisma.TransactionClient | PrismaService) {}
+	public constructor(private readonly _prisma: Prisma.TransactionClient) {}
 
 	public async getById(id: string): Promise<Example | null> {
-		const example: ExamplePrisma | null = await this._prisma.example.findUnique({
+		const example = await this._prisma.example.findUnique({
 			where: {
 				id,
 			},
@@ -24,6 +23,7 @@ export class ExamplePrismaRepository implements IExampleRepository {
 	public async create(input: Example): Promise<void> {
 		await this._prisma.example.create({
 			data: {
+				companyId: input.companyId,
 				description: input.description,
 				id: input.id.value,
 				name: input.name,

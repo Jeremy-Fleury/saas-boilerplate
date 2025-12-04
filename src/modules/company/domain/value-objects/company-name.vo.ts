@@ -1,4 +1,4 @@
-import { ValidationError } from "@/common/errors/domain/domain.error";
+import { ValidationDomainError } from "@/common/errors/domain/domain.error";
 import { RootValueObject } from "@/common/root/domain/value-objects/root.vo";
 
 export class CompanyName extends RootValueObject<string> {
@@ -13,11 +13,11 @@ export class CompanyName extends RootValueObject<string> {
 		const value = name.trim().toLowerCase();
 
 		if (value.length < CompanyName._MIN_LENGTH) {
-			throw new ValidationError("name must not be empty");
+			throw new ValidationDomainError("name must not be empty");
 		}
 
 		if (value.length > CompanyName._MAX_LENGTH) {
-			throw new ValidationError(`name must be <= ${CompanyName._MAX_LENGTH} chars`);
+			throw new ValidationDomainError(`name must be <= ${CompanyName._MAX_LENGTH} chars`);
 		}
 
 		return new CompanyName(value);
