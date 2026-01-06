@@ -11,10 +11,9 @@ import type { OpenAPIObject } from "@nestjs/swagger";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { HttpExceptionFilter } from "@/app/infrastructure/filters/http-exception.filter";
 import { AppModule } from "@/app/infrastructure/modules/app.module";
-
-import { HttpExceptionFilter } from "./app/infrastructure/filters/http-exception.filter";
-import { createValidationPipe } from "./app/infrastructure/pipes/validation.pipe";
+import { createValidationPipe } from "@/app/infrastructure/pipes/validation.pipe";
 
 require("dd-trace").init({ logInjection: true });
 

@@ -27,14 +27,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": [
-			"**",
-			"!**/dist",
-			"!**/node_modules",
-			"!prisma",
-			"!src/common/database/infrastructure/prisma-client",
-			"!openapi.json"
-		]
+		"includes": ["**", "!**/dist", "!**/node_modules", "!**/prisma", "!**/prisma-client", "!**/openapi.json"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -168,7 +161,7 @@
 								"selector": { "kind": "classMember" }
 							},
 							{
-								"formats": ["CONSTANT_CASE", "camelCase"],
+								"formats": ["camelCase", "PascalCase"],
 								"selector": { "kind": "function" }
 							},
 							{
