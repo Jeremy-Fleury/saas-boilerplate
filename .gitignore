@@ -63,3 +63,6 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # Turbo
 .turbo
+
+# Orval
+packages/api-client/src

@@ -58,6 +58,11 @@ async function bootstrap(): Promise<void> {
 	app.useGlobalPipes(createValidationPipe());
 	app.useGlobalFilters(new HttpExceptionFilter());
 
+	app.enableCors({
+		credentials: true,
+		origin: true,
+	});
+
 	const document = swaggerSetup(app);
 
 	app.use(

@@ -27,7 +27,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!**/dist", "!**/node_modules", "!**/prisma", "!**/prisma-client", "!**/openapi.json"]
+		"includes": ["packages/api-client"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -57,10 +57,6 @@
 		}
 	},
 	"linter": {
-		"domains": {
-			"project": "all",
-			"test": "all"
-		},
 		"enabled": true,
 		"rules": {
 			"complexity": {

@@ -2,12 +2,19 @@
 	"$schema": "https://turborepo.com/schema.json",
 	"tasks": {
 		"build": {
-			"dependsOn": ["^tsc", "^check", "^build"],
+			"dependsOn": ["^build:api-client"],
 			"outputs": ["dist/**"]
+		},
+		"build:api-client": {
+			"cache": false
 		},
 		"dev": {
 			"cache": false,
+			"dependsOn": ["^build:api-client", "docker:up"],
 			"persistent": true
+		},
+		"docker:up": {
+			"cache": false
 		}
 	}
 }

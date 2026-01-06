@@ -1,7 +1,10 @@
 {
 	"dependencies": {
-		"react": "^19.2.0",
-		"react-dom": "^19.2.0"
+		"@org/api-client": "workspace:*",
+		"@tanstack/react-query": "5.90.16",
+		"axios": "1.13.2",
+		"react": "19.2.0",
+		"react-dom": "19.2.0"
 	},
 	"devDependencies": {
 		"@types/node": "24.10.1",
@@ -14,7 +17,7 @@
 		"typescript-eslint": "8.46.4",
 		"vite": "7.2.4"
 	},
-	"name": "@jfleury/saas-boilerplate-client",
+	"name": "@org/saas-boilerplate-client",
 	"scripts": {
 		"build": "tsc -b && vite build",
 		"dev": "vite",
