@@ -30,7 +30,7 @@
 		"@vitest/coverage-v8": "4.0.5",
 		"dotenv": "17.2.3",
 		"globals": "16.4.0",
-		"prisma": "7.0.1",
+		"prisma": "7.2.0",
 		"prisma-erd-generator": "2.3.0",
 		"puppeteer": "24.31.0",
 		"source-map-support": "0.5.21",
