@@ -3,12 +3,12 @@
 		"@org/api-client": "workspace:*",
 		"@tanstack/react-query": "5.90.16",
 		"axios": "1.13.2",
-		"react": "19.2.0",
+		"react": "19.2.3",
 		"react-dom": "19.2.0"
 	},
 	"devDependencies": {
 		"@types/node": "24.10.1",
-		"@types/react": "19.2.5",
+		"@types/react": "19.2.7",
 		"@types/react-dom": "19.2.3",
 		"@vitejs/plugin-react": "5.1.1",
 		"babel-plugin-react-compiler": "1.0.0",
