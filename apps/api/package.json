@@ -30,7 +30,6 @@
 		"@vitest/coverage-v8": "4.0.5",
 		"dotenv": "17.2.3",
 		"globals": "16.4.0",
-		"orval": "7.17.2",
 		"prisma": "7.0.1",
 		"prisma-erd-generator": "2.3.0",
 		"puppeteer": "24.31.0",
@@ -44,7 +43,6 @@
 	"name": "@org/saas-boilerplate-api",
 	"scripts": {
 		"build": "nest build",
-		"build:api-client": "orval",
 		"dev": "nest start --watch",
 		"docker:up": "docker compose up -d",
 		"openapi:export": "nest build && node dist/src/app/presentation/commands/openapi-export.command.js",

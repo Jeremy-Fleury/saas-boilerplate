@@ -1,4 +1,3 @@
-import { CompanyPrismaRepository } from "@/modules/company/infrastructure/repositories/company.prisma-repository";
 import { ExamplePrismaRepository } from "@/modules/example/infrastructure/repositories/example.prisma-repository";
 
 import type { UnitOfWorkService } from "../../domain/services/unit-of-work.service";
@@ -12,10 +11,8 @@ export class UnitOfWorkPrismaService implements UnitOfWorkService {
 	public execute<TResult>(callback: (context: UnitOfWorkContextService) => Promise<TResult>): Promise<TResult> {
 		return this._prismaService.$transaction((tx: Prisma.TransactionClient) => {
 			const example = new ExamplePrismaRepository(tx);
-			const company = new CompanyPrismaRepository(tx);
 
 			const context: UnitOfWorkContextService = {
-				company,
 				example,
 			};
 
