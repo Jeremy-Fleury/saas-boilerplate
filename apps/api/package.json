@@ -40,7 +40,7 @@
 		"typescript": "5.9.3",
 		"vitest": "4.0.16"
 	},
-	"name": "@org/saas-boilerplate-api",
+	"name": "@org/api",
 	"scripts": {
 		"build": "nest build",
 		"dev": "nest start --watch",
