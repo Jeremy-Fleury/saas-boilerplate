@@ -6,7 +6,7 @@
 		},
 		"dev": {
 			"cache": false,
-			"dependsOn": ["build:api-client", "docker:up"],
+			"dependsOn": ["@org/api-client#build", "docker:up"],
 			"persistent": true
 		},
 		"docker:up": {
@@ -25,6 +25,7 @@
 			"cache": false,
 			"dependsOn": [
 				"@org/api#setup:local:env",
+				"@org/client#setup:local:env",
 				"@org/api#docker:up",
 				"@org/api#prisma:migrate",
 				"@org/api#prisma:generate",

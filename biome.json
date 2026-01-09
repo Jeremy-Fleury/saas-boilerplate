@@ -20,6 +20,7 @@
 						]
 					}
 				},
+				"useSortedAttributes": "on",
 				"useSortedKeys": "on"
 			}
 		},
@@ -69,7 +70,6 @@
 			},
 			"nursery": {
 				"noImportCycles": "error",
-				"useExplicitType": "error",
 				"useMaxParams": {
 					"level": "error",
 					"options": {

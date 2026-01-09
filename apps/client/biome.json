@@ -2,7 +2,15 @@
 	"extends": "//",
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!dist", "!node_modules", "!prisma", "!**/prisma-client", "!openapi.json"]
+		"includes": [
+			"**",
+			"!dist",
+			"!node_modules",
+			"!prisma",
+			"!**/prisma-client",
+			"!openapi.json",
+			"!src/routeTree.gen.ts"
+		]
 	},
 	"linter": {
 		"domains": {
@@ -12,6 +20,7 @@
 		},
 		"rules": {
 			"style": {
+				"useComponentExportOnlyModules": "off",
 				"useNamingConvention": {
 					"level": "error",
 					"options": {
@@ -57,7 +66,7 @@
 								"selector": { "kind": "function" }
 							},
 							{
-								"formats": ["CONSTANT_CASE", "camelCase"],
+								"formats": ["CONSTANT_CASE", "camelCase", "PascalCase"],
 								"selector": { "kind": "const" }
 							},
 							{
