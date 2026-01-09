@@ -15,6 +15,19 @@
 		},
 		"docker:up": {
 			"cache": false
+		},
+		"prisma:migrate": {
+			"cache": false
+		},
+		"prisma:generate": {
+			"cache": false
+		},
+		"setup:local:env": {
+			"cache": false
+		},
+		"setup:local": {
+			"cache": false,
+			"dependsOn": ["setup:local:env", "docker:up", "prisma:migrate", "prisma:generate", "^build:api-client"]
 		}
 	}
 }
