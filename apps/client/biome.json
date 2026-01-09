@@ -1,4 +1,12 @@
 {
+	"css": {
+		"formatter": {
+			"enabled": true
+		},
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
 	"extends": "//",
 	"files": {
 		"ignoreUnknown": true,
