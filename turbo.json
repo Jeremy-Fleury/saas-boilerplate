@@ -2,32 +2,38 @@
 	"$schema": "https://turborepo.com/schema.json",
 	"tasks": {
 		"build": {
-			"dependsOn": ["^build:api-client"],
-			"outputs": ["dist/**"]
-		},
-		"build:api-client": {
 			"cache": false
 		},
 		"dev": {
 			"cache": false,
-			"dependsOn": ["^build:api-client", "docker:up"],
+			"dependsOn": ["build:api-client", "docker:up"],
 			"persistent": true
 		},
 		"docker:up": {
 			"cache": false
 		},
-		"prisma:migrate": {
+		"openapi:export": {
 			"cache": false
 		},
 		"prisma:generate": {
 			"cache": false
 		},
-		"setup:local:env": {
+		"prisma:migrate": {
 			"cache": false
 		},
 		"setup:local": {
 			"cache": false,
-			"dependsOn": ["setup:local:env", "docker:up", "prisma:migrate", "prisma:generate", "^build:api-client"]
+			"dependsOn": [
+				"@org/api#setup:local:env",
+				"@org/api#docker:up",
+				"@org/api#prisma:migrate",
+				"@org/api#prisma:generate",
+				"@org/api#openapi:export",
+				"@org/api-client#build"
+			]
+		},
+		"setup:local:env": {
+			"cache": false
 		}
 	}
 }
