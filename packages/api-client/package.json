@@ -6,7 +6,7 @@
 		"msw": "2.12.7"
 	},
 	"devDependencies": {
-		"orval": "7.17.2",
+		"orval": "7.18.0",
 		"typescript": "5.9.3"
 	},
 	"exports": {
