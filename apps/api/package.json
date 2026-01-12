@@ -25,7 +25,7 @@
 		"@nestjs/schematics": "11.0.9",
 		"@nestjs/testing": "11.1.11",
 		"@swc/core": "1.15.8",
-		"@types/node": "25.0.3",
+		"@types/node": "25.0.6",
 		"@types/pg": "8.16.0",
 		"@vitest/coverage-v8": "4.0.16",
 		"dotenv": "17.2.3",
