@@ -1,6 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class HealthOutputDto {
+interface IHealthOutputDtoProps {
+	status: "ok";
+}
+
+export class HealthOutputDto implements IHealthOutputDtoProps {
+	public constructor(props: IHealthOutputDtoProps) {
+		this.status = props.status;
+	}
+
 	@ApiProperty({
 		description: "The status of the health check",
 		example: "ok",

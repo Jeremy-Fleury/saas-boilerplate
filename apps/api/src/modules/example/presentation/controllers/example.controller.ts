@@ -9,15 +9,15 @@ import {
 	ApiParam,
 } from "@nestjs/swagger";
 
-import type { CreateExampleUseCase } from "../../application/create-example-use-cases/create-example.use-case";
-import type { GetExampleUseCase } from "../../application/get-example-use-cases/get-example.use-case";
 import {
 	EXAMPLE_CREATE_EXAMPLE_USE_CASE_TOKEN,
 	EXAMPLE_GET_EXAMPLE_USE_CASE_TOKEN,
-} from "../../infrastructure/dependency-injection/example.token";
-import { ExampleInputDto } from "../dto/inputs/example.input-dto";
-import { ExampleOutputDto } from "../dto/outputs/example.output-dto";
-import { ExampleOutputDtoMappers } from "../mappers/example-output-dto.mappers";
+} from "@/modules/example/infrastructure/dependency-injection/example.token";
+import { ExampleInputDto } from "@/modules/example/presentation/dto/inputs/example.input-dto";
+import { ExampleOutputDto } from "@/modules/example/presentation/dto/outputs/example.output-dto";
+import { ExampleOutputDtoMappers } from "@/modules/example/presentation/mappers/example-output-dto.mappers";
+import type { CreateExampleUseCase } from "@/modules/example/application/create-example.use-case";
+import type { GetExampleUseCase } from "@/modules/example/application/get-example.use-case";
 
 @Controller("example")
 export class ExampleController {

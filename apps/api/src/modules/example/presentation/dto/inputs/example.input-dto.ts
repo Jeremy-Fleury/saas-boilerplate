@@ -1,7 +1,21 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString } from "class-validator";
 
-export class ExampleInputDto {
+interface IExampleInputDtoProps {
+	name: string;
+	description: string;
+	companyId: string;
+	tenantId: string;
+}
+
+export class ExampleInputDto implements IExampleInputDtoProps {
+	public constructor(props: IExampleInputDtoProps) {
+		this.name = props.name;
+		this.description = props.description;
+		this.companyId = props.companyId;
+		this.tenantId = props.tenantId;
+	}
+
 	@ApiProperty({
 		description: "The name of the example",
 		example: "Example",

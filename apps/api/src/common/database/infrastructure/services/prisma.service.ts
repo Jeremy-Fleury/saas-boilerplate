@@ -3,8 +3,8 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import type { OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import type { ConfigService } from "@nestjs/config";
 
-import type { Prisma } from "../prisma-client/client";
-import { PrismaClient } from "../prisma-client/client";
+import { PrismaClient } from "@/common/database/infrastructure/prisma-client/client";
+import type { Prisma } from "@/common/database/infrastructure/prisma-client/client";
 
 type TPrismaEventClient = {
 	$on: (

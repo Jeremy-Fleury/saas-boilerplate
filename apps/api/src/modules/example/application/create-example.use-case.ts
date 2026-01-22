@@ -1,7 +1,6 @@
+import { Example } from "@/modules/example/domain/entities/example.entity";
 import type { UnitOfWorkService } from "@/common/database/domain/services/unit-of-work.service";
-import type { IIdService } from "@/common/uuid/domain/services/id.service";
-
-import { Example } from "../../domain/entities/example.entity";
+import type { IdService } from "@/common/id/domain/services/id.service";
 
 export interface ICreateExampleUseCaseProps {
 	name: string;
@@ -11,7 +10,7 @@ export interface ICreateExampleUseCaseProps {
 
 export class CreateExampleUseCase {
 	public constructor(
-		private readonly _idService: IIdService,
+		private readonly _idService: IdService,
 		private readonly _unitOfWork: UnitOfWorkService,
 	) {}
 
@@ -22,7 +21,7 @@ export class CreateExampleUseCase {
 			const example = Example.create({
 				companyId: props.companyId,
 				description: props.description,
-				id,
+				id: id.value,
 				name: props.name,
 			});
 

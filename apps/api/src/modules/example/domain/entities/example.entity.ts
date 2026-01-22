@@ -1,8 +1,7 @@
+import { UuidV7 } from "@/common/id/domain/value-objects/uuid.vo";
 import { Root } from "@/common/root/domain/entities/root.entity";
-import { UuidV7 } from "@/common/uuid/domain/value-objects/uuid.vo";
+import { ExampleStatus } from "@/modules/example/domain/value-objects/example-status.vo";
 import type { IRootConstructorProps, IRootPrimitives } from "@/common/root/domain/entities/root.entity";
-
-import { ExampleStatus } from "../value-objects/example-status.vo";
 
 interface IExampleConstructorProps extends IRootConstructorProps {
 	companyId: string;
@@ -26,13 +25,14 @@ export interface IExamplePrimitives extends IRootPrimitives {
 }
 
 export class Example extends Root {
-	private _companyId: string;
+	private _companyId: UuidV7;
 	private _description: string;
 	private _name: string;
 	private _status: ExampleStatus;
 
 	private constructor(props: IExampleConstructorProps) {
 		super(props);
+		this._companyId = UuidV7.fromPrimitive(props.companyId);
 		this._name = props.name;
 		this._description = props.description;
 		this._status = props.status;
@@ -52,7 +52,7 @@ export class Example extends Root {
 		return this._status;
 	}
 
-	public get companyId(): string {
+	public get companyId(): UuidV7 {
 		return this._companyId;
 	}
 
@@ -90,7 +90,7 @@ export class Example extends Root {
 
 	public toPrimitives(): IExamplePrimitives {
 		return {
-			companyId: this.companyId,
+			companyId: this.companyId.value,
 			description: this.description,
 			id: this.id.value,
 			name: this.name,

@@ -32,6 +32,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@faker-js/faker':
+        specifier: 10.2.0
+        version: 10.2.0
       '@fastify/static':
         specifier: 9.0.0
         version: 9.0.0

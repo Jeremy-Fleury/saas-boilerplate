@@ -61,15 +61,23 @@
 		"enabled": true,
 		"rules": {
 			"complexity": {
-				"noExcessiveLinesPerFunction": "error",
+				"noExcessiveLinesPerFunction": {
+					"level": "error",
+					"options": {
+						"maxLines": 50,
+						"skipBlankLines": true
+					}
+				},
 				"noStaticOnlyClass": "off",
 				"noUselessCatch": "error"
 			},
 			"correctness": {
+				"noUndeclaredVariables": "error",
 				"useImportExtensions": "off"
 			},
 			"nursery": {
 				"noImportCycles": "error",
+				"noUselessUndefined": "error",
 				"useMaxParams": {
 					"level": "error",
 					"options": {
@@ -90,6 +98,13 @@
 				"noNestedTernary": "error",
 				"noNonNullAssertion": "error",
 				"noProcessEnv": "error",
+				"noRestrictedGlobals": {
+					"options": {
+						"deniedGlobals": {
+							"undefined": "Interdit : utilise null (absence) ou une valeur. undefined est réservé au non-initialisé."
+						}
+					}
+				},
 				"noRestrictedImports": {
 					"level": "error",
 					"options": {
@@ -98,8 +113,8 @@
 						},
 						"patterns": [
 							{
-								"group": ["../../../**"],
-								"message": "Triple ../ imports are forbidden. Use aliases for imports."
+								"group": ["../**"],
+								"message": "Imports from parent directories are forbidden. Use aliases for imports."
 							}
 						]
 					}
