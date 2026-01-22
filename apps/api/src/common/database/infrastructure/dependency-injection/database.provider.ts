@@ -1,8 +1,9 @@
 import { ConfigService } from "@nestjs/config";
 import type { Provider } from "@nestjs/common";
 
-import { PrismaService } from "../services/prisma.service";
-import { UnitOfWorkPrismaService } from "../services/prisma-unit-of-work.service";
+import { PrismaService } from "@/common/database/infrastructure/services/prisma.service";
+import { UnitOfWorkPrismaService } from "@/common/database/infrastructure/services/prisma-unit-of-work.service";
+
 import { PRISMA_SERVICE_TOKEN, PRISMA_UNIT_OF_WORK_TOKEN } from "./database.token";
 
 export const PRISMA_SERVICE_PROVIDER: Provider<PrismaService> = {

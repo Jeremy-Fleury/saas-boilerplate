@@ -1,7 +1,6 @@
+import { Example } from "@/modules/example/domain/entities/example.entity";
 import type { Prisma } from "@/common/database/infrastructure/prisma-client/client";
-
-import { Example } from "../../domain/entities/example.entity";
-import type { IExampleRepository } from "../../domain/repositories/example.repository";
+import type { IExampleRepository } from "@/modules/example/domain/repositories/example.repository";
 
 export class ExamplePrismaRepository implements IExampleRepository {
 	public constructor(private readonly _prisma: Prisma.TransactionClient) {}
@@ -23,7 +22,7 @@ export class ExamplePrismaRepository implements IExampleRepository {
 	public async create(input: Example): Promise<void> {
 		await this._prisma.example.create({
 			data: {
-				companyId: input.companyId,
+				companyId: input.companyId.value,
 				description: input.description,
 				id: input.id.value,
 				name: input.name,

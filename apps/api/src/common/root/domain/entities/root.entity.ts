@@ -1,4 +1,4 @@
-import type { UuidV7 } from "@/common/uuid/domain/value-objects/uuid.vo";
+import type { UuidV7 } from "@/common/id/domain/value-objects/uuid.vo";
 
 export interface IRootPrimitives {
 	id: string;

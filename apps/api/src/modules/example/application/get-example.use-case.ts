@@ -1,6 +1,5 @@
 import type { UnitOfWorkService } from "@/common/database/domain/services/unit-of-work.service";
-
-import type { Example } from "../../domain/entities/example.entity";
+import type { Example } from "@/modules/example/domain/entities/example.entity";
 
 export interface ICreateExampleUseCaseProps {
 	name: string;

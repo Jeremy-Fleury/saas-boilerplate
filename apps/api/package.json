@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@faker-js/faker": "10.2.0",
 		"@fastify/static": "9.0.0",
 		"@nestjs/common": "11.1.12",
 		"@nestjs/config": "4.0.2",
