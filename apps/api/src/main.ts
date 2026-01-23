@@ -1,3 +1,4 @@
+import FastifyStatic from "@fastify/static";
 import { ConsoleLogger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
@@ -50,7 +51,10 @@ async function bootstrap(): Promise<void> {
 	app.useLogger(
 		new ConsoleLogger({
 			json: NODE_ENV !== "local",
-			prefix: "NestJS Boilerplate",
+			logLevels:
+				NODE_ENV === "local"
+					? ["verbose", "debug", "log", "warn", "error", "fatal"]
+					: ["log", "warn", "error", "fatal"],
 			timestamp: true,
 		}),
 	);
@@ -73,9 +77,14 @@ async function bootstrap(): Promise<void> {
 		}),
 	);
 
+	await app.register(FastifyStatic, {
+		prefix: "/",
+		root: join(process.cwd(), "public"),
+	});
+
 	await app.init();
 
-	await app.listen(PORT ?? DEFAULT_PORT);
+	await app.listen(PORT ?? DEFAULT_PORT, "0.0.0.0");
 }
 
 void bootstrap();
