@@ -5,8 +5,8 @@ const MAX_PORT = 65535;
 
 export class EnvironmentVariablesInputDto {
 	@IsString()
-	@IsIn(["local", "development", "production"])
-	public NODE_ENV!: "local" | "development" | "production" | "test";
+	@IsIn(["local", "development", "production", "test", "openapi"])
+	public NODE_ENV!: "local" | "development" | "production" | "test" | "openapi";
 
 	@IsNumber()
 	@Min(MIN_PORT)
