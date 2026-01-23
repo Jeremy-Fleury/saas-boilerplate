@@ -1,61 +1,43 @@
-#####################
-# Stage 1: Builder  #
-#####################
+# ---------- deps ----------
 
-FROM node:24-alpine AS builder
+FROM node:24-slim AS deps
 
-# Build tools: needed for native modules compilation (dd-trace, etc.)
-# These are only in builder stage, not in final image, so they don't increase image size
-RUN corepack enable && corepack prepare pnpm@10.0.0 --activate && apk add --no-cache libc6-compat python3 make g++
-
-WORKDIR /app
+RUN corepack enable
+WORKDIR /repo
 
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
-COPY apps/api/package.json ./apps/api/
-COPY packages/api-client/package.json ./packages/api-client/
+COPY apps/api/package.json apps/api/package.json
 
-RUN pnpm install --frozen-lockfile --shamefully-hoist
+RUN pnpm install --frozen-lockfile
 
-COPY apps/api ./apps/api
-COPY packages ./packages
+# ---------- build ----------
 
+FROM node:24-slim AS build
+WORKDIR /repo
+RUN corepack enable
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app/apps/api
-RUN export PATH="/app/node_modules/.bin:$PATH" && /app/node_modules/.bin/prisma generate
-RUN /app/node_modules/.bin/nest build
+COPY . .
+COPY --from=deps /repo/node_modules /repo/node_modules
+COPY --from=deps /repo/apps/api/node_modules /repo/apps/api/node_modules
 
-################################
-# Stage 2: Production runtime  #
-################################
+RUN pnpm --filter api prisma:generate
 
-FROM node:24-alpine AS production
+RUN pnpm --filter api build
 
-RUN corepack enable && corepack prepare pnpm@10.0.0 --activate
+# ---------- runtime ----------
 
-WORKDIR /app
+FROM node:24-slim AS runtime
+WORKDIR /repo
+RUN corepack enable
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
-COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
-
-COPY apps/api/package.json ./apps/api/
-COPY packages/api-client/package.json ./packages/api-client/
-
-RUN pnpm install --frozen-lockfile --prod --ignore-scripts && pnpm store prune && rm -rf /root/.pnpm-store
-
-COPY --from=builder /app/apps/api/dist ./apps/api/dist
-COPY --from=builder /app/apps/api/src/common/database/infrastructure/prisma-client ./apps/api/src/common/database/infrastructure/prisma-client
-COPY --from=builder /app/apps/api/prisma.config.ts ./apps/api/
-COPY --from=builder /app/apps/api/prisma/schema ./apps/api/prisma/schema
-COPY --from=builder /app/apps/api/prisma/migrations ./apps/api/prisma/migrations
-
-WORKDIR /app/apps/api
-
-# Create non-root user for security
-RUN addgroup -g 1001 -S nodejs && adduser -S nestjs -u 1001 && chown -R nestjs:nodejs /app
-USER nestjs
+COPY --from=build /repo/apps/api/dist ./apps/api/dist
+COPY --from=build /repo/node_modules ./node_modules
+COPY --from=build /repo/apps/api/node_modules ./apps/api/node_modules
+COPY --from=build /repo/package.json ./package.json
+COPY --from=build /repo/apps/api/prisma ./apps/api/prisma
 
 EXPOSE 3000
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
-
-CMD ["pnpm", "start:prod"]
+CMD ["node", "apps/api/dist/src/main.js"]
