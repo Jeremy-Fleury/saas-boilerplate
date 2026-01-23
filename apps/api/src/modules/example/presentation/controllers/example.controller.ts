@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Inject, NotFoundException, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Post } from "@nestjs/common";
 import {
 	ApiBadRequestResponse,
 	ApiBody,
@@ -56,11 +56,6 @@ Retrieves an **Example** by its identifier.
 	})
 	public async getExampleById(@Param("id") id: string): Promise<ExampleOutputDto> {
 		const example = await this._getExampleUseCase.execute(id);
-
-		if (!example) {
-			throw new NotFoundException("Example not found");
-		}
-
 		return ExampleOutputDtoMappers.fromEntity(example);
 	}
 

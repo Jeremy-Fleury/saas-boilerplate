@@ -24,7 +24,6 @@ archived archived
     DateTime updatedAt 
     }
   
-    "Company" o{--}o "Example" : ""
-    "Example" o|--|| "ExampleStatus" : "enum:status"
-    "Example" o|--|| "Company" : "company"
+    "Example" |o--|| "ExampleStatus" : "enum:status"
+    "Example" }o--|| "Company" : "company"
 ```

@@ -12,18 +12,19 @@ describe("[src/modules/example/application/get-example.use-case.ts]", () => {
 		useCase = new GetExampleUseCase(unitOfWorkMock);
 	});
 
-	afterAll(() => {
-		vi.restoreAllMocks();
+	beforeEach(() => {
+		vi.mocked(contextMock.example.getById).mockResolvedValue(ExampleFixture.BASE_ENTITY);
 	});
 
 	afterEach(() => {
 		vi.resetAllMocks();
 	});
 
-	it("should get an example", async () => {
-		// Arrange
-		vi.mocked(contextMock.example.getById).mockResolvedValue(ExampleFixture.BASE_ENTITY);
+	afterAll(() => {
+		vi.restoreAllMocks();
+	});
 
+	it("should get an example", async () => {
 		// Act
 		const result = await useCase.execute(ExampleFixture.BASE_ENTITY.id.value);
 

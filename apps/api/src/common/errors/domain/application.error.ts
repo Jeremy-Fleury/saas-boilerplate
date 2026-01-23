@@ -9,3 +9,4 @@ export abstract class ApplicationError extends Error {
 }
 
 export class RessourceAlreadyExistsApplicationError extends ApplicationError {}
+export class RessourceNotFoundApplicationError extends ApplicationError {}
