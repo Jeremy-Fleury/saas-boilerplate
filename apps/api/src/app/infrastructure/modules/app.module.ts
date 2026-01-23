@@ -15,6 +15,7 @@ import { ExampleModule } from "@/modules/example/infrastructure/modules/example.
 			isGlobal: true,
 			validate: envValidationService,
 		}),
+
 		ExampleModule,
 		DatabaseModule,
 	],

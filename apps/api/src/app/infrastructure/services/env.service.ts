@@ -3,8 +3,17 @@ import { validateSync } from "class-validator";
 
 import { EnvironmentVariablesInputDto } from "@/app/presentation/dto/inputs/env.input-dto";
 
-export function envValidationService(config: Record<string, unknown>): EnvironmentVariablesInputDto {
-	const validatedConfig = plainToInstance(EnvironmentVariablesInputDto, config, { enableImplicitConversion: true });
+export function envValidationService(
+	config: Record<string, unknown>,
+): EnvironmentVariablesInputDto | Record<string, unknown> {
+	// biome-ignore lint/complexity/useLiteralKeys: false positive
+	if (config["NODE_ENV"] === "openapi") {
+		return config;
+	}
+
+	const validatedConfig = plainToInstance(EnvironmentVariablesInputDto, config, {
+		enableImplicitConversion: true,
+	});
 
 	const errors = validateSync(validatedConfig, { skipMissingProperties: false });
 

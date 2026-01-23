@@ -13,7 +13,9 @@ import { AppModule } from "@/app/infrastructure/modules/app.module";
  * This file is used to generate the API documentation and the client code.
  */
 async function openApiExportCommand(): Promise<void> {
-	const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), { logger: false });
+	const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter(), {
+		logger: false,
+	});
 
 	const packageJson = JSON.parse(readFileSync(resolve(process.cwd(), "package.json"), "utf-8"));
 

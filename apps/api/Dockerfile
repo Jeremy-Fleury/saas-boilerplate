@@ -1,9 +1,12 @@
+# syntax=docker/dockerfile:1.4
+
 # ---------- deps ----------
 
 FROM node:24-slim AS deps
 
 RUN corepack enable
 WORKDIR /repo
+ENV HUSKY=0
 
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY apps/api/package.json apps/api/package.json
@@ -15,18 +18,18 @@ RUN pnpm install --frozen-lockfile
 FROM node:24-slim AS build
 WORKDIR /repo
 RUN corepack enable
+
 RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 COPY . .
 COPY --from=deps /repo/node_modules /repo/node_modules
 COPY --from=deps /repo/apps/api/node_modules /repo/apps/api/node_modules
 
-RUN pnpm --filter api prisma:generate
-
+RUN DATABASE_URL="postgresql://fake-database-url" pnpm --filter api prisma:generate
 RUN pnpm --filter api build
 
 # ---------- runtime ----------
-
+ 
 FROM node:24-slim AS runtime
 WORKDIR /repo
 RUN corepack enable
