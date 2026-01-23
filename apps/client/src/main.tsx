@@ -7,7 +7,7 @@ import "./styles/index.css";
 
 import { routeTree } from "./routeTree.gen";
 
-Axios.defaults.baseURL = import.meta.env.API_URL;
+Axios.defaults.baseURL = "http://localhost:3000";
 
 const queryClient = new QueryClient();
 

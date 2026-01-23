@@ -1,20 +1,14 @@
 import { HttpStatus } from "@nestjs/common";
 
-import { ApplicationError, RessourceAlreadyExistsApplicationError } from "@/common/errors/domain/application.error";
-import { DomainError, InvalidTransitionDomainError, ValidationDomainError } from "@/common/errors/domain/domain.error";
 import {
-	InfrastructureError,
-	InfrastructureValidationInfrastructureError,
-} from "@/common/errors/domain/infrastructure.error";
+	RessourceAlreadyExistsApplicationError,
+	RessourceNotFoundApplicationError,
+} from "@/common/errors/domain/application.error";
+import { InvalidTransitionDomainError, ValidationDomainError } from "@/common/errors/domain/domain.error";
+import { InfrastructureValidationInfrastructureError } from "@/common/errors/domain/infrastructure.error";
 import { DtoValidationPresentationError } from "@/common/errors/domain/presentation.error";
 
 type TErrorConstructor = abstract new (message: string, payload?: Record<string, unknown>) => Error;
-
-export const errorHttpStatusByBase: Map<TErrorConstructor, HttpStatus> = new Map([
-	[DomainError, HttpStatus.BAD_REQUEST],
-	[ApplicationError, HttpStatus.UNPROCESSABLE_ENTITY],
-	[InfrastructureError, HttpStatus.INTERNAL_SERVER_ERROR],
-]);
 
 const errorHttpStatusByDomainError: Map<TErrorConstructor, HttpStatus> = new Map([
 	[ValidationDomainError, HttpStatus.BAD_REQUEST],
@@ -22,6 +16,7 @@ const errorHttpStatusByDomainError: Map<TErrorConstructor, HttpStatus> = new Map
 ]);
 
 const errorHttpStatusByApplicationError: Map<TErrorConstructor, HttpStatus> = new Map([
+	[RessourceNotFoundApplicationError, HttpStatus.NOT_FOUND],
 	[RessourceAlreadyExistsApplicationError, HttpStatus.CONFLICT],
 ]);
 

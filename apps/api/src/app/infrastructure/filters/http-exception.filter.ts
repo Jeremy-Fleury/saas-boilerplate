@@ -1,4 +1,4 @@
-import { Catch, HttpStatus } from "@nestjs/common";
+import { Catch, HttpStatus, Logger } from "@nestjs/common";
 import type { ArgumentsHost, ExceptionFilter } from "@nestjs/common";
 import type { FastifyReply } from "fastify";
 
@@ -6,10 +6,9 @@ import { ApplicationError } from "@/common/errors/domain/application.error";
 import { DomainError } from "@/common/errors/domain/domain.error";
 import { InfrastructureError } from "@/common/errors/domain/infrastructure.error";
 import { PresentationError } from "@/common/errors/domain/presentation.error";
-import { errorHttpStatusByBase, errorHttpStatusByError } from "@/common/errors/infrastructure/mappers/errors.mapper";
+import { errorHttpStatusByError } from "@/common/errors/infrastructure/mappers/errors.mapper";
 
 type THttpErrorBody = {
-	statusCode: number;
 	error: string;
 	message: string;
 	payload: Record<string, unknown>;
@@ -22,6 +21,8 @@ type THttpErrorResponse = {
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
+	private readonly _logger = new Logger(HttpExceptionFilter.name);
+
 	public catch(exception: unknown, host: ArgumentsHost): void {
 		const ctx = host.switchToHttp();
 		const response = ctx.getResponse<FastifyReply>();
@@ -39,13 +40,17 @@ export class HttpExceptionFilter implements ExceptionFilter {
 			exception instanceof PresentationError
 		) {
 			const status = this._getStatusForError(exception) ?? HttpStatus.INTERNAL_SERVER_ERROR;
-
 			return this._buildResponse(status, exception.name, exception.message, exception.payload);
 		}
 
-		const message = typeof exception === "string" ? exception : "Internal server error";
+		this._logger.error(exception);
 
-		return this._buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "InternalServerError", message, {});
+		return this._buildResponse(
+			HttpStatus.INTERNAL_SERVER_ERROR,
+			"InternalServerError",
+			"This error is not handled by the application",
+			{},
+		);
 	}
 
 	private _getStatusForError(error: Error): number | null {
@@ -54,13 +59,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
 				return status;
 			}
 		}
-
-		for (const [errorType, status] of errorHttpStatusByBase.entries()) {
-			if (error instanceof errorType) {
-				return status;
-			}
-		}
-
 		return null;
 	}
 
@@ -75,7 +73,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
 				error,
 				message,
 				payload,
-				statusCode: status,
 			},
 			status,
 		};
