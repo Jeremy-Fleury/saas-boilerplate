@@ -4,7 +4,7 @@ generator client {
   moduleFormat = "cjs"
 }
 
-datasource db {
+datasource postgres {
   provider = "postgresql"
 }
 

@@ -5,9 +5,6 @@ model Example {
   description String
   status      ExampleStatus @default(draft)
 
-  // Relationships
-  company Company @relation(fields: [companyId], references: [id])
-
   // Metadata
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

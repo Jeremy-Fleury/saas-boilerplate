@@ -11,6 +11,12 @@ export default defineConfig({
 			indexFiles: true,
 			mock: false,
 			mode: "split",
+			override: {
+				mutator: {
+					name: "customInstance",
+					path: "./src/http/custom-instance.ts",
+				},
+			},
 			schemas: "./src/model",
 			target: "./src/api.ts",
 		},
