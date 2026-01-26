@@ -6,6 +6,7 @@
 		"msw": "2.12.7"
 	},
 	"devDependencies": {
+		"@types/node": "25.0.10",
 		"orval": "7.19.0",
 		"react": "19.2.3",
 		"typescript": "5.9.3"
@@ -14,6 +15,10 @@
 		".": {
 			"import": "./src/api.ts",
 			"require": "./src/api.ts"
+		},
+		"./http/custom-instance": {
+			"import": "./src/http/custom-instance.ts",
+			"require": "./src/http/custom-instance.ts"
 		},
 		"./model": {
 			"import": "./src/model/index.ts",

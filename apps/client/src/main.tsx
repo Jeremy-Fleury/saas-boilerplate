@@ -1,13 +1,20 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
-import Axios from "axios";
 import { StrictMode } from "react";
 import ReactDom from "react-dom/client";
 import "./styles/index.css";
 
+import { setApiBaseUrl } from "@org/api-client/http/custom-instance";
+
 import { routeTree } from "./routeTree.gen";
 
-Axios.defaults.baseURL = "http://localhost:3000";
+setApiBaseUrl(import.meta.env.VITE_API_URL);
+
+declare module "@tanstack/react-router" {
+	interface Register {
+		router: typeof router;
+	}
+}
 
 const queryClient = new QueryClient();
 
@@ -17,12 +24,6 @@ const router = createRouter({
 	routeTree,
 	scrollRestoration: true,
 });
-
-declare module "@tanstack/react-router" {
-	interface Register {
-		router: typeof router;
-	}
-}
 
 const rootElement = document.getElementById("root");
 

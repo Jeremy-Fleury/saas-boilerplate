@@ -2,7 +2,7 @@
 	"extends": "//",
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!src"]
+		"includes": ["**", "!src/model", "!src/api.ts"]
 	},
 	"root": false
 }
