@@ -27,6 +27,9 @@
 			"test": "all"
 		},
 		"rules": {
+			"nursery": {
+				"useSortedClasses": "error"
+			},
 			"style": {
 				"useComponentExportOnlyModules": "off",
 				"useNamingConvention": {
