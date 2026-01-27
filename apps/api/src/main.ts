@@ -1,4 +1,3 @@
-import FastifyStatic from "@fastify/static";
 import { ConsoleLogger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
@@ -76,11 +75,6 @@ async function bootstrap(): Promise<void> {
 			withFastify: true,
 		}),
 	);
-
-	await app.register(FastifyStatic, {
-		prefix: "/",
-		root: join(process.cwd(), "public"),
-	});
 
 	await app.init();
 
