@@ -1,6 +1,7 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Post, UseGuards } from "@nestjs/common";
 import {
 	ApiBadRequestResponse,
+	ApiBearerAuth,
 	ApiBody,
 	ApiCreatedResponse,
 	ApiNotFoundResponse,
@@ -9,6 +10,7 @@ import {
 	ApiParam,
 } from "@nestjs/swagger";
 
+import { JwtAuthGuard } from "@/common/auth/infrastructure/guards/jwt-auth.guard";
 import {
 	EXAMPLE_CREATE_EXAMPLE_USE_CASE_TOKEN,
 	EXAMPLE_GET_EXAMPLE_USE_CASE_TOKEN,
@@ -20,6 +22,8 @@ import type { CreateExampleUseCase } from "@/modules/example/application/create-
 import type { GetExampleUseCase } from "@/modules/example/application/get-example.use-case";
 
 @Controller("example")
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 export class ExampleController {
 	public constructor(
 		@Inject(EXAMPLE_CREATE_EXAMPLE_USE_CASE_TOKEN)

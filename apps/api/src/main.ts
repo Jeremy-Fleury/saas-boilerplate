@@ -23,6 +23,7 @@ function swaggerSetup(app: INestApplication): OpenAPIObject {
 		.setTitle(packageJson.name)
 		.setDescription(packageJson.description)
 		.setVersion(packageJson.version)
+		.addBearerAuth()
 		.build();
 	const document: OpenAPIObject = SwaggerModule.createDocument(app, config);
 

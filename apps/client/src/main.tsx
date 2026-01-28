@@ -6,6 +6,8 @@ import "./styles/index.css";
 
 import { setApiBaseUrl } from "@org/api-client/http/custom-instance";
 
+import { AuthProvider } from "@/modules/auth/auth-provider";
+
 import { routeTree } from "./routeTree.gen";
 
 setApiBaseUrl(import.meta.env.VITE_API_URL);
@@ -35,9 +37,11 @@ if (!rootElement.innerHTML) {
 	const root = ReactDom.createRoot(rootElement);
 	root.render(
 		<StrictMode>
-			<QueryClientProvider client={queryClient}>
-				<RouterProvider router={router} />
-			</QueryClientProvider>
+			<AuthProvider>
+				<QueryClientProvider client={queryClient}>
+					<RouterProvider router={router} />
+				</QueryClientProvider>
+			</AuthProvider>
 		</StrictMode>,
 	);
 }

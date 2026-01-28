@@ -30,6 +30,52 @@ pnpm setup:local
 pnpm dev
 ```
 
+## Auth0 Setup (Client ↔ API)
+
+This boilerplate now supports an Auth0 JWT flow between the React client and the NestJS API.
+
+### 1) Create Auth0 Applications
+
+- **SPA Application** (for the React client)
+- **API** (for the NestJS backend)
+
+Make note of:
+- **Domain** (e.g. `your-tenant.us.auth0.com`)
+- **Client ID** (SPA app)
+- **API Identifier / Audience** (API)
+
+### 2) Configure Auth0 URLs
+
+In your SPA app settings (Auth0):
+- **Allowed Callback URLs**: `http://localhost:5173`
+- **Allowed Logout URLs**: `http://localhost:5173`
+- **Allowed Web Origins**: `http://localhost:5173`
+
+Adjust the origin if your client runs on another port.
+
+### 3) Environment Variables
+
+Client (`apps/client/.env`):
+```
+VITE_API_URL=http://localhost:3000
+VITE_AUTH0_DOMAIN=your-tenant.us.auth0.com
+VITE_AUTH0_CLIENT_ID=your_spa_client_id
+VITE_AUTH0_AUDIENCE=your_api_identifier
+```
+
+API (`apps/api/.env`):
+```
+NODE_ENV=local
+PORT=3000
+AUTH0_ISSUER_URL=https://your-tenant.us.auth0.com/
+AUTH0_AUDIENCE=your_api_identifier
+```
+
+### 4) Authenticated Endpoints
+
+The `example` endpoints are protected with a JWT guard. Once logged in, the client will attach
+the Auth0 access token to API requests automatically.
+
 ## Architecture
 
 This project follows a **monorepo architecture** powered by pnpm workspaces and Turbo, organized into apps and packages:
@@ -98,4 +144,3 @@ This project is a boilerplate template. Set your own license as needed.
 ---
 
 **Happy coding! 🚀**
-
